@@ -1,0 +1,13 @@
+# Tech-Specific Agent Knowledge
+
+This directory is auto-populated by agents as they learn your project patterns.
+
+When you run `/review`, `/test`, or `/pre-commit` for the first time, the agent will:
+1. Detect your language and framework
+2. Create a tech-specific knowledge file (e.g., `review-javascript-vue.md`)
+3. Use this file in future runs for faster, more consistent results
+
+You can:
+- Manually edit these files to add team conventions
+- Commit them to share knowledge across your team
+- Keep them local for personal customization
