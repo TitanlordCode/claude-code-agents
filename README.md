@@ -4,6 +4,8 @@
 
 Adaptive AI agents that work with any programming language or project type. From JavaScript to Rust, from web apps to Blender add-ons, these agents learn your project's patterns and provide intelligent assistance.
 
+📖 **[View Complete Commands Reference](COMMANDS_REFERENCE.md)** - Detailed workflow and examples
+
 ## Features
 
 ### 🔍 Adaptive Code Review (`/review`)
@@ -208,12 +210,14 @@ Agents automatically create and maintain:
 - `.claude-agents/agents/tech-specific/test-{lang}-{framework}.md`
 - `.claude-agents/agents/tech-specific/precommit-{lang}-{framework}.md`
 
-These files contain:
-- Detected tools and versions
+These files contain **universal patterns** for each stack:
 - Language/framework best practices
-- Project-specific patterns
+- Common tools and configurations
+- Typical project structures
 - Automated check commands
-- Examples from your codebase
+- Code examples and anti-patterns
+
+**Important**: These files should contain **universal knowledge** (e.g., "Vue 3 best practices") that can be shared across projects. For project-specific conventions (e.g., "Neo prefix", "Material colors"), create `.claude/review-guidelines.md` in your project instead.
 
 ### Benefits
 
