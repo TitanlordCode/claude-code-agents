@@ -2,9 +2,19 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CLAUDE_DIR=".claude"
+
+# Determine project root (parent of .claude-agents if running from submodule)
+if [[ "$SCRIPT_DIR" == *"/.claude-agents"* ]] || [[ "$SCRIPT_DIR" == *"\\.claude-agents"* ]]; then
+    # Running from submodule - go to parent directory
+    PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+else
+    # Running from source repo - use current directory
+    PROJECT_ROOT="$PWD"
+fi
+
+CLAUDE_DIR="$PROJECT_ROOT/.claude"
 COMMANDS_DIR="$CLAUDE_DIR/commands"
-CACHE_DIR=".claude-agents/.cache"
+CACHE_DIR="$PROJECT_ROOT/.claude-agents/.cache"
 
 echo "🔄 Updating Claude Code Agents..."
 echo ""

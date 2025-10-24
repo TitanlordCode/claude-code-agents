@@ -1,10 +1,20 @@
 #!/bin/bash
 set -e
 
-CLAUDE_DIR=".claude"
-COMMANDS_DIR="$CLAUDE_DIR/commands"
-CACHE_DIR=".claude-agents/.cache"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Determine project root (parent of .claude-agents if running from submodule)
+if [[ "$SCRIPT_DIR" == *"/.claude-agents"* ]] || [[ "$SCRIPT_DIR" == *"\\.claude-agents"* ]]; then
+    # Running from submodule - go to parent directory
+    PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+else
+    # Running from source repo - use current directory
+    PROJECT_ROOT="$PWD"
+fi
+
+CLAUDE_DIR="$PROJECT_ROOT/.claude"
+COMMANDS_DIR="$CLAUDE_DIR/commands"
+CACHE_DIR="$PROJECT_ROOT/.claude-agents/.cache"
 
 echo "📦 Installing Claude Code Agents..."
 echo ""
@@ -25,16 +35,17 @@ cp "$SCRIPT_DIR/agents/test.md" "$COMMANDS_DIR/test.md"
 cp "$SCRIPT_DIR/agents/pre-commit.md" "$COMMANDS_DIR/pre-commit.md"
 
 # Ensure .claude is in gitignore
-if [ -f ".gitignore" ]; then
-    if ! grep -q "^\.claude/$" .gitignore 2>/dev/null; then
-        echo "" >> .gitignore
-        echo "# Claude Code - local development only" >> .gitignore
-        echo ".claude/" >> .gitignore
+GITIGNORE_FILE="$PROJECT_ROOT/.gitignore"
+if [ -f "$GITIGNORE_FILE" ]; then
+    if ! grep -q "^\.claude/$" "$GITIGNORE_FILE" 2>/dev/null; then
+        echo "" >> "$GITIGNORE_FILE"
+        echo "# Claude Code - local development only" >> "$GITIGNORE_FILE"
+        echo ".claude/" >> "$GITIGNORE_FILE"
         echo "✓ Added .claude/ to .gitignore"
     fi
 else
-    echo "# Claude Code - local development only" > .gitignore
-    echo ".claude/" >> .gitignore
+    echo "# Claude Code - local development only" > "$GITIGNORE_FILE"
+    echo ".claude/" >> "$GITIGNORE_FILE"
     echo "✓ Created .gitignore with .claude/"
 fi
 
