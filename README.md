@@ -163,6 +163,86 @@ These files:
 - Can be manually edited to capture team preferences
 - Help onboard new contributors
 
+## Context Persistence
+
+Agents remember your previous conversations and maintain context across sessions:
+
+**`.claude-agents/.cache/context/`** - Conversation history
+- `review-last.json` - Last review session
+- `test-last.json` - Last testing session
+- `precommit-last.json` - Last pre-commit session
+
+**Benefits**:
+- **Continuity**: Pick up where you left off
+- **Preferences**: Remember your choices (auto-fix, verbosity, etc.)
+- **Pending items**: Track unresolved issues across sessions
+- **Insights**: Accumulate project knowledge over time
+- **Efficiency**: Avoid repeating same analysis
+
+**Example**:
+```
+📋 Previous session (2 hours ago):
+- Reviewed 3 files in src/components/
+- Fixed 2/3 issues (1 pending)
+- Pending: Fix type error in Button.vue:45
+
+Continuing from where we left off...
+```
+
+**Privacy**: Context stored locally only, not committed to git, contains no sensitive data.
+
+## MCP Recommendations
+
+Agents can recommend relevant MCP servers to enhance your workflow based on your project type.
+
+### How It Works
+
+On first run in a new project, agents detect your stack and suggest useful MCPs:
+
+**Example for Vue + TypeScript + PostgreSQL**:
+```
+🔌 Recommended MCPs for your project:
+
+Essential:
+✓ filesystem - Enhanced file operations
+✓ git - Advanced git operations
+
+Highly Recommended:
+📦 brave-search - Search npm packages and docs
+🗄️ postgres - Database operations and queries
+🐙 github - PR and issue management
+
+Optional:
+🎭 puppeteer - E2E testing automation
+
+Would you like help setting these up?
+```
+
+### Supported MCPs
+
+**Development Tools**:
+- `filesystem` - Enhanced file operations
+- `git` - Advanced git features
+- `github` - PR management, issues, repository operations
+
+**Language-Specific**:
+- `brave-search` - Package discovery, documentation
+- `postgres` / `sqlite` - Database operations
+- `puppeteer` - Browser automation, E2E testing
+
+**Framework-Specific**:
+- Recommendations based on Vue, React, Django, Rails, etc.
+
+### Installation Help
+
+Agents provide:
+- Configuration snippets for `claude_desktop_config.json`
+- Installation commands
+- Environment variable requirements
+- Usage hints after installation
+
+**Safety**: Agents never auto-install MCPs - they always ask permission and explain what each MCP does.
+
 ## Updating
 
 To get the latest agents:

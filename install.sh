@@ -3,6 +3,7 @@ set -e
 
 CLAUDE_DIR=".claude"
 COMMANDS_DIR="$CLAUDE_DIR/commands"
+CACHE_DIR=".claude-agents/.cache"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "📦 Installing Claude Code Agents..."
@@ -10,6 +11,12 @@ echo ""
 
 # Create .claude structure (not tracked by git)
 mkdir -p "$COMMANDS_DIR"
+
+# Create cache directory for performance optimization
+mkdir -p "$CACHE_DIR"
+mkdir -p "$CACHE_DIR/context"
+echo "✓ Created cache directory for performance optimization"
+echo "✓ Created context directory for conversation persistence"
 
 # Copy agents to .claude/commands/
 echo "Copying agents..."
